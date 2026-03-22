@@ -1,13 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+
 function Products() {
     const [products, setProducts] = useState([]);
-
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     const [page, setPage] = useState(1);
+
     const navigate = useNavigate();
+
     const getProducts = useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
@@ -16,12 +18,14 @@ function Products() {
                 `/api/products?search=${search}&category=${category}`,
                 {
                     headers: {
-                        authorization: token
+                        authorization: `Bearer ${token}`
                     }
                 }
             );
 
             setProducts(res.data);
+            console.log("PRODUCTS:", res.data);
+
         } catch (err) {
             console.log(err);
         }
@@ -33,12 +37,14 @@ function Products() {
 
     return (
         <div>
-            {/* 👉 ADD THIS BUTTON AT TOP */}
             <button onClick={() => navigate("/create")}>
                 ➕ Create Product
             </button>
 
             <h2>Products</h2>
+
+            {/* Empty message */}
+            {products.length === 0 && <p>No products found</p>}
 
             {/* Search + Filter */}
             <input
@@ -56,7 +62,7 @@ function Products() {
 
             {/* Product List */}
             {products
-                .filter(p => p.title && p.price) //  FILTER BAD DATA
+                .filter(p => p.title && p.price)
                 .map((p) => (
                     <div key={p._id}>
                         <h3>{p.title}</h3>
@@ -77,7 +83,6 @@ function Products() {
             </button>
         </div>
     );
-
 }
 
 export default Products;
