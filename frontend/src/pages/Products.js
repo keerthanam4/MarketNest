@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -9,15 +10,11 @@ function Products() {
     const [category, setCategory] = useState("");
     const [page, setPage] = useState(1);
     const navigate = useNavigate();
-    const getProducts = async () => {
+    const getProducts = useCallback(async () => {
         const token = localStorage.getItem("token");
 
-        console.log("Search:", search);
-        console.log("Category:", category);
-        console.log(`/products?search=${search}&category=${category}&page=${page}`);
-
         const res = await API.get(
-            `/products?search=${search}&category=${category}&page=${page}`,
+            `/products?search=${search}&category=${category}`,
             {
                 headers: {
                     authorization: token
@@ -25,14 +22,12 @@ function Products() {
             }
         );
 
-        console.log("API Response:", res.data); // 
-
-        setProducts(res.data); // 
-    };
+        setProducts(res.data);
+    }, [search, category]);
 
     useEffect(() => {
         getProducts();
-    }, [search, category, page]);
+    }, [getProducts]);
 
     return (
         <div>
