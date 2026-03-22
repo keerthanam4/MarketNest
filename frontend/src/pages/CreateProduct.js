@@ -8,6 +8,8 @@ function CreateProduct() {
     const [category, setCategory] = useState("");
     const navigate = useNavigate();
     const handleCreate = async () => {
+        console.log("NEW CODE RUNNING ✅");  // 👈 ADD HERE
+
         try {
             const token = localStorage.getItem("token");
 
@@ -25,11 +27,12 @@ function CreateProduct() {
                 }
             );
 
-            console.log("CALLING API:", "/api/products");
+            alert("Product Created ✅");
+            navigate("/products");
 
         } catch (err) {
             console.error(err);
-            alert("Error creating product ❌");
+            alert("Error ❌");
         }
     };
 
