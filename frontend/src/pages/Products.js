@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
-
 function Products() {
     const [products, setProducts] = useState([]);
 
