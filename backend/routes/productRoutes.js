@@ -17,7 +17,7 @@ router.get("/stats", auth, role("brand"), getStats);
 router.delete("/:id", auth, role("brand"), deleteProduct);
 
 // only brand can create
-router.post("/", auth, role("brand"), createProduct);
+router.post("/", auth, createProduct);
 
 // anyone logged in can view
 router.get("/", auth, getProducts);
