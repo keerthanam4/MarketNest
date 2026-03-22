@@ -11,18 +11,22 @@ function Products() {
     const [page, setPage] = useState(1);
     const navigate = useNavigate();
     const getProducts = useCallback(async () => {
-        const token = localStorage.getItem("token");
+        try {
+            const token = localStorage.getItem("token");
 
-        const res = await API.get(
-            `/products?search=${search}&category=${category}`,
-            {
-                headers: {
-                    authorization: token
+            const res = await API.get(
+                `/products?search=${search}&category=${category}`,
+                {
+                    headers: {
+                        authorization: token
+                    }
                 }
-            }
-        );
+            );
 
-        setProducts(res.data);
+            setProducts(res.data);
+        } catch (err) {
+            console.log(err);
+        }
     }, [search, category]);
 
     useEffect(() => {
