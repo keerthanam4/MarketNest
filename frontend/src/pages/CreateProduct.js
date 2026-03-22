@@ -12,7 +12,7 @@ function CreateProduct() {
             const token = localStorage.getItem("token");
 
             const res = await API.post(
-                "/api/products",
+                "/api/products",   // ✅ FIXED HERE
                 {
                     title,
                     price,
@@ -25,45 +25,31 @@ function CreateProduct() {
                 }
             );
 
-            console.log(res.data);
             alert("Product Created ✅");
             navigate("/products");
 
         } catch (err) {
             console.error(err);
-            alert("Error creating product ❌");
+            alert("Error ❌");
         }
     };
 
-    const token = localStorage.getItem("token");
+    return (
+        <div>
+            <h2>Create Product</h2>
 
-    await API.post(
-        "/products",
-        { title, price, category },
-        {
-            headers: { authorization: token }
-        }
+            <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+            <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
+
+            <select onChange={(e) => setCategory(e.target.value)}>
+                <option value="">Select</option>
+                <option value="clothing">Clothing</option>
+                <option value="footwear">Footwear</option>
+            </select>
+
+            <button onClick={handleCreate}>Create</button>
+        </div>
     );
-
-    alert("Product Created");
-};
-
-return (
-    <div>
-        <h2>Create Product</h2>
-
-        <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
-        <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
-
-        <select onChange={(e) => setCategory(e.target.value)}>
-            <option value="">Select</option>
-            <option value="clothing">Clothing</option>
-            <option value="footwear">Footwear</option>
-        </select>
-
-        <button onClick={handleCreate}>Create</button>
-    </div>
-);
 }
 
 export default CreateProduct;
