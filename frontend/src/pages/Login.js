@@ -8,17 +8,38 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const res = await API.post("/api/auth/login", { email, password });
-        localStorage.setItem("token", res.data.token);
-        navigate("/products");
-        alert("Login success");
+        try {
+            const res = await API.post("/api/auth/login", {
+                email,
+                password
+            });
+
+            localStorage.setItem("token", res.data.token);
+
+            alert("Login success ✅");
+            navigate("/products");
+
+        } catch (err) {
+            console.error(err);
+            alert("Login failed ❌ Check email/password or server");
+        }
     };
 
     return (
         <div>
             <h2>Login</h2>
-            <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-            <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+
+            <input
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <input
+                placeholder="Password"
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+            />
+
             <button onClick={handleLogin}>Login</button>
         </div>
     );
