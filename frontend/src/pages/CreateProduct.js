@@ -25,9 +25,7 @@ function CreateProduct() {
                 }
             );
 
-            console.log(res.data);
-            alert("Product Created ✅");
-            navigate("/products");
+            console.log("CALLING API:", "/api/products");
 
         } catch (err) {
             console.error(err);
