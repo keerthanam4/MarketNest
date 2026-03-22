@@ -13,7 +13,7 @@ function Products() {
             const token = localStorage.getItem("token");
 
             const res = await API.get(
-                `/products?search=${search}&category=${category}`,
+                `/api/products?search=${search}&category=${category}`,
                 {
                     headers: {
                         authorization: token

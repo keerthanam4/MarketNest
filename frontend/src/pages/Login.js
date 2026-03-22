@@ -8,7 +8,7 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const res = await API.post("/auth/login", { email, password });
+        const res = await API.post("/api/auth/login", { email, password });
         localStorage.setItem("token", res.data.token);
         navigate("/products");
         alert("Login success");
