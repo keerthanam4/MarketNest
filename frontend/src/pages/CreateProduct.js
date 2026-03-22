@@ -12,7 +12,7 @@ function CreateProduct() {
             const token = localStorage.getItem("token");
 
             const res = await API.post(
-                "/api/products",   // ✅ FIXED HERE
+                "/api/products",
                 {
                     title,
                     price,
@@ -25,12 +25,13 @@ function CreateProduct() {
                 }
             );
 
+            console.log(res.data);
             alert("Product Created ✅");
             navigate("/products");
 
         } catch (err) {
             console.error(err);
-            alert("Error ❌");
+            alert("Error creating product ❌");
         }
     };
 
