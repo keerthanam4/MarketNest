@@ -9,6 +9,7 @@ function CreateProduct() {
     const navigate = useNavigate();
 
     const handleCreate = async () => {
+        console.log("FORCE UPDATE");
         console.log("NEW CODE RUNNING ✅");
 
         try {
