@@ -35,6 +35,28 @@ function Products() {
         getProducts();
     }, [getProducts]);
 
+    // 🔥 DELETE FUNCTION 
+    const handleDelete = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            await API.delete(`/api/products/${id}`, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            });
+
+            alert("Deleted ✅");
+
+            // refresh products
+            getProducts();
+
+        } catch (err) {
+            console.log(err);
+            alert("Delete failed ❌");
+        }
+    };
+
     return (
         <div>
             <button onClick={() => navigate("/create")}>
@@ -68,6 +90,11 @@ function Products() {
                         <h3>{p.title}</h3>
                         <p>Price: {p.price}</p>
                         <p>Category: {p.category}</p>
+
+                        {/* 🔥 DELETE BUTTON */}
+                        <button onClick={() => handleDelete(p._id)}>
+                            ❌ Delete
+                        </button>
                     </div>
                 ))}
 

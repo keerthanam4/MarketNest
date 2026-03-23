@@ -14,7 +14,14 @@ const { getStats } = require("../controllers/productController");
 
 router.get("/stats", auth, role("brand"), getStats);
 
-router.delete("/:id", auth, role("brand"), deleteProduct);
+router.delete("/:id", auth, async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.json({ msg: "Product deleted" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 // only brand can create
 router.post("/", auth, createProduct);
