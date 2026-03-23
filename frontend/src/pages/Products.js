@@ -10,6 +10,7 @@ function Products() {
 
     const navigate = useNavigate();
 
+    // ✅ GET PRODUCTS
     const getProducts = useCallback(async () => {
         try {
             const token = localStorage.getItem("token");
@@ -23,11 +24,11 @@ function Products() {
                 }
             );
 
-            setProducts(res.data);
+            setProducts(res.data || []);
             console.log("PRODUCTS:", res.data);
 
         } catch (err) {
-            console.log(err);
+            console.log("GET ERROR:", err);
         }
     }, [search, category]);
 
@@ -35,7 +36,7 @@ function Products() {
         getProducts();
     }, [getProducts]);
 
-    // 🔥 DELETE FUNCTION 
+    // ✅ DELETE PRODUCT
     const handleDelete = async (id) => {
         try {
             const token = localStorage.getItem("token");
@@ -48,11 +49,11 @@ function Products() {
 
             alert("Deleted ✅");
 
-            // refresh products
+            // refresh
             getProducts();
 
         } catch (err) {
-            console.log(err);
+            console.log("DELETE ERROR:", err);
             alert("Delete failed ❌");
         }
     };
@@ -65,15 +66,16 @@ function Products() {
 
             <h2>Products</h2>
 
-            {/* Empty message */}
+            {/* EMPTY STATE */}
             {products.length === 0 && <p>No products found</p>}
 
-            {/* Search + Filter */}
+            {/* SEARCH */}
             <input
                 placeholder="Search product title..."
                 onChange={(e) => setSearch(e.target.value)}
             />
 
+            {/* CATEGORY */}
             <select onChange={(e) => setCategory(e.target.value)}>
                 <option value="">All</option>
                 <option value="clothing">Clothing</option>
@@ -82,23 +84,23 @@ function Products() {
 
             <button onClick={getProducts}>Search</button>
 
-            {/* Product List */}
+            {/* PRODUCTS */}
             {products
-                .filter(p => p.title && p.price)
+                .filter(p => p?.title && p?.price)
                 .map((p) => (
-                    <div key={p._id}>
+                    <div key={p._id} style={{ marginBottom: "15px" }}>
                         <h3>{p.title}</h3>
                         <p>Price: {p.price}</p>
                         <p>Category: {p.category}</p>
 
-                        {/* 🔥 DELETE BUTTON */}
+                        {/* ✅ DELETE BUTTON */}
                         <button onClick={() => handleDelete(p._id)}>
                             ❌ Delete
                         </button>
                     </div>
                 ))}
 
-            {/* Pagination */}
+            {/* PAGINATION */}
             <button onClick={() => setPage(page - 1)} disabled={page === 1}>
                 Prev
             </button>
