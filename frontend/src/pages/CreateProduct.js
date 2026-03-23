@@ -7,13 +7,15 @@ function CreateProduct() {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const navigate = useNavigate();
+
     const handleCreate = async () => {
-        console.log("NEW CODE RUNNING ✅");  // 👈 ADD HERE
+        console.log("NEW CODE RUNNING ✅");
 
         try {
             const token = localStorage.getItem("token");
 
-            const res = await API.post(
+
+            await API.post(
                 "/api/products",
                 {
                     title,
@@ -40,8 +42,15 @@ function CreateProduct() {
         <div>
             <h2>Create Product</h2>
 
-            <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
-            <input placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
+            <input
+                placeholder="Title"
+                onChange={(e) => setTitle(e.target.value)}
+            />
+
+            <input
+                placeholder="Price"
+                onChange={(e) => setPrice(e.target.value)}
+            />
 
             <select onChange={(e) => setCategory(e.target.value)}>
                 <option value="">Select</option>
